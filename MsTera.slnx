@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MsTera.Api/MsTera.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/">
+    <Project Path="src/Modules/MsTera.Modules.Users/MsTera.Modules.Users.csproj" />
+  </Folder>
+  <Folder Name="/src/Shared/">
+    <Project Path="src/Shared/MsTera.Shared.Abstractions/MsTera.Shared.Abstractions.csproj" />
+    <Project Path="src/Shared/MsTera.Shared.Infrastructure/MsTera.Shared.Infrastructure.csproj" />
+  </Folder>
+</Solution>
