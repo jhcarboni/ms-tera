@@ -41,6 +41,26 @@ dotnet run --project src/MsTera.Api
 ```
 O Swagger estará disponível em `https://localhost:<porta>/swagger`.
 
-## 4. Testando a Autenticação
-- No Swagger, há um botão de `Authorize` onde você deve inserir o seu JWT (no formato `Bearer {token}`).
-- Como a autenticação primária é feita via Google, você precisará acessar as rotas de login (como `/login-google`) via navegador para realizar a etapa de consentimento e obter o seu token JWT em resposta.
+## 4. Testando a Autenticação e o OAuth2
+
+**Passo 1: Verifique as Permissões no Google Cloud**
+Antes de testar o login, acesse o painel do Google Cloud (onde o ClientId foi criado) e garanta que você adicionou a seguinte URL na aba "URIs de redirecionamento autorizados":
+👉 `http://localhost:<porta>/signin-google` *(verifique no log a porta em que a API subiu, ex: 5282)*.
+
+**Passo 2: Faça o Login via Navegador**
+No navegador, acesse manualmente a rota de desafio:
+👉 `http://localhost:<porta>/api/auth/login-google`
+- Você será redirecionado para a tela de login do Google.
+- Após escolher sua conta e aprovar as permissões, o Google redirecionará você de volta para a API.
+- Se tudo der certo, você verá uma tela JSON com a mensagem de sucesso e o seu **Token JWT**. Copie **APENAS** o grande texto gerado no campo `"token"`.
+
+**Passo 3: Insira o Token no Swagger**
+- Acesse o Swagger da aplicação (`http://localhost:<porta>/swagger`).
+- Clique no botão **Authorize** (no topo).
+- Cole o Token copiado no campo de texto. (Não é preciso digitar a palavra "Bearer", nosso Swagger está configurado para injetá-la automaticamente).
+- Clique em *Authorize* e feche o modal.
+
+**Passo 4: Valide nas Rotas Protegidas**
+- Expanda o endpoint protegido, por exemplo o **`GET /api/auth/me`**.
+- Clique em *Try it out* e *Execute*.
+- Se o token estiver correto, a API validará o acesso e retornará 200 OK com os seus dados lidos diretamente do JWT (Email, Nome e ID Google).
